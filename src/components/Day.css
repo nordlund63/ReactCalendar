@@ -1,0 +1,24 @@
+.day{
+    width: calc(100% / 8);
+    display: inline-block;
+    border: 1px black solid;
+    padding: 0px 0px 0px 0px;
+    margin: 1px;
+}
+
+.bold{
+    color: black;
+}
+
+.soft{
+    color: gray;
+}
+
+.selected{
+    background-color: yellow;
+}
+
+.super-selected{
+    background-color: red;
+
+}
