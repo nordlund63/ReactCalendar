@@ -4,30 +4,34 @@ import React from "react";
 
 function Day(props) {
   function selectDate() {
-    if (props.day.getMonth() !== props.month) {
+    if (props.date.getMonth() !== props.month) {
       return null;
     }
 
     props.onDaySelected({
-      selected: props.selected,
-      day: props.day,
+      superselected: props.superselected,
+      date: props.date,
     });
   }
 
-  const className = `day ${
-    props.day.getMonth() === props.month ? "bold" : "soft"
+  const className = `date ${
+    props.date.getMonth() === props.month ? "bold" : "soft"
   } 
-        ${props.selected ? "selected" : ""}`;
+        ${props.selected ? " selected" : ""};
+        ${props.superselected ? " super-selected" : ""}`;
   return (
-    <span
+    <div
       onClick={selectDate}
-      day={props.day}
+      date={props.date}
       selected={false}
+      superselected={false}
       className={className}
-      key={props.day.toDateString()}
+      key={props.date.toDateString()}
     >
-      {props.day.getDate()}
-    </span>
+     <span>
+        {props.date.getDate()}
+      </span> 
+    </div>
   );
 }
 

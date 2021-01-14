@@ -15,15 +15,14 @@ function getDaysInMonth(month, year) {
     let days = [];
     while (date <= upperLimitForDate) {
       days.push({
-          day: new Date(date),
-          selected: false
+          date: new Date(date),
+          selected: false,
+          superselected: false
       });
       date.setDate(date.getDate() + 1);
     }
     return days;
 }
-
-
 
 class Month extends React.Component{
     constructor(props){
@@ -34,32 +33,23 @@ class Month extends React.Component{
         };
     }
 
-    selectDate = (e) =>{
-        console.log(e.target);
-    }
-
     onNewSelectedDay = (e) => {
         console.log(e);
         const days = this.state.days;
-        days.find(i => i.day === e.day).selected = !e.selected;
+        const superselectedDays = days.filter(e => e.superselected === true);
         
-        const allSelectedDays = this.state.days.filter((day) => day.selected);
-        if(allSelectedDays.length > 1){
-            const maxDay = new Date(Math.max.apply(null, allSelectedDays.map(e => e.day)));
-            const minDay = new Date(Math.min.apply(null, allSelectedDays.map(e => e.day)));
-            if(maxDay > e.day && e.day > minDay){
-                days.forEach(i => {
-                    i.selected = false;
-                });
-                days.find(i => i.day === e.day).selected = e.selected;
-            }
-            else{
-                days.forEach(i => {
-                    if(maxDay > i.day && i.day > minDay){
-                        i.selected = true;
-                    }
-                });
-            }
+        if(superselectedDays.length === 0){
+            days.find(i => i.date === e.date).superselected = !e.true;
+        }
+        else if(superselectedDays.length === 1 && e.date !== superselectedDays[0].date){
+            days.find(i => i.date === e.date).superselected = true;
+        }
+        else{
+            days.forEach(i => {
+                i.selected = false;
+                i.superselected = false;
+            });
+            days.find(i => i.date === e.date).superselected = true;
         }
 
         this.setState({
@@ -72,31 +62,32 @@ class Month extends React.Component{
         <Day 
             onDaySelected={this.onNewSelectedDay}
             selected={obj.selected} 
-            day={obj.day} 
+            superselected={obj.superselected}
+            date={obj.date} 
             month={this.props.month}
-            key={obj.day} />);
+            key={obj.date} />);
         
         return (
             <div className="month">
-            <span className="day">
+            <span className="date">
                 Sun
             </span>
-            <span className="day">
+            <span className="date">
                 Mon
             </span>
-            <span className="day">
+            <span className="date">
                 Tues
             </span>
-            <span className="day">
+            <span className="date">
                 Wed
             </span>
-            <span className="day">
+            <span className="date">
                 Thurs
             </span>
-            <span className="day">
+            <span className="date">
                 Fri
             </span>
-            <span className="day">
+            <span className="date">
                 Sat
             </span>
             {lst}

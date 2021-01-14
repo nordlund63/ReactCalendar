@@ -1,9 +1,11 @@
-.day{
-    width: calc(100% / 8);
+.date{
+    width: calc(100% / 7);
     display: inline-block;
-    border: 1px black solid;
-    padding: 0px 0px 0px 0px;
-    margin: 1px;
+    padding: 7px 0 7px 0;
+    margin: 1px 0 1px 0;
+    /* border: 1px black solid; */
+    /* padding: 0px 0px 0px 0px;
+    margin: 1px; */
 }
 
 .bold{
@@ -19,6 +21,6 @@
 }
 
 .super-selected{
-    background-color: red;
-
+    background-color: #005aeb;
+    border-radius: 50%;
 }
