@@ -14,23 +14,37 @@ function Day(props) {
     });
   }
 
-  const className = `date ${
+  const className = `day-text ${
     props.date.getMonth() === props.month ? "bold" : "soft"
-  } 
-        ${props.selected ? " selected" : ""};
-        ${props.superselected ? " super-selected" : ""}`;
+  }`;
+
+  const contentContainer = `selection-container ${props.selected ? " selected" : ""}
+                         ${props.superselected ? " super-selected" : ""}`;
+
+  let backgroundContainer = "date-container";
+  if(props.superselected){
+    if(props.firstDaySuperSelected){
+      backgroundContainer = "date-container super-selected-background-first";
+    }
+    else{
+      backgroundContainer = "date-container super-selected-background-last";
+    }
+  }
+
   return (
-    <div
+    <div className={backgroundContainer}>
+      <div
       onClick={selectDate}
       date={props.date}
       selected={false}
       superselected={false}
-      className={className}
+      className={contentContainer}
       key={props.date.toDateString()}
-    >
-     <span>
-        {props.date.getDate()}
-      </span> 
+      >
+        <span className={className}>
+            {props.date.getDate()}
+          </span> 
+      </div>
     </div>
   );
 }

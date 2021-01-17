@@ -34,15 +34,21 @@ class Month extends React.Component{
     }
 
     onNewSelectedDay = (e) => {
-        console.log(e);
         const days = this.state.days;
         const superselectedDays = days.filter(e => e.superselected === true);
         
         if(superselectedDays.length === 0){
-            days.find(i => i.date === e.date).superselected = !e.true;
+            days.find(i => i.date === e.date).superselected = true;
         }
         else if(superselectedDays.length === 1 && e.date !== superselectedDays[0].date){
             days.find(i => i.date === e.date).superselected = true;
+            days.find(i => i.date === e.date).firstDaySuperSelected = false;
+
+            const maxDay = new Date(Math.max.apply(null, days.filter(e => e.superselected === true).map(e => e.date)));
+            const minDay = new Date(Math.min.apply(null, days.filter(e => e.superselected === true).map(e => e.date)));
+            
+            days.filter(i => i.date < maxDay && i.date > minDay).forEach(k => k.selected = true);
+            days.find(i => i.date === minDay).firstDaySuperSelected = true;
         }
         else{
             days.forEach(i => {
@@ -51,7 +57,6 @@ class Month extends React.Component{
             });
             days.find(i => i.date === e.date).superselected = true;
         }
-
         this.setState({
             ...days
         });
@@ -65,29 +70,31 @@ class Month extends React.Component{
             superselected={obj.superselected}
             date={obj.date} 
             month={this.props.month}
-            key={obj.date} />);
+            key={obj.date} 
+            firstDaySuperSelected={false}
+            />);
         
         return (
             <div className="month">
-            <span className="date">
+            <span className="date-container">
                 Sun
             </span>
-            <span className="date">
+            <span className="date-container">
                 Mon
             </span>
-            <span className="date">
+            <span className="date-container">
                 Tues
             </span>
-            <span className="date">
+            <span className="date-container">
                 Wed
             </span>
-            <span className="date">
+            <span className="date-container">
                 Thurs
             </span>
-            <span className="date">
+            <span className="date-container">
                 Fri
             </span>
-            <span className="date">
+            <span className="date-container">
                 Sat
             </span>
             {lst}
