@@ -40,20 +40,22 @@ class Month extends React.Component{
         if(superselectedDays.length === 0){
             days.find(i => i.date === e.date).superselected = true;
         }
-        else if(superselectedDays.length === 1 && e.date !== superselectedDays[0].date){
+        else if(superselectedDays.length === 1 && e.date !== superselectedDays[0].date && e.date > superselectedDays[0].date){
             days.find(i => i.date === e.date).superselected = true;
-            days.find(i => i.date === e.date).firstDaySuperSelected = false;
+            days.find(i => i.date === e.date).lastDaySuperSelected = true;
 
             const maxDay = new Date(Math.max.apply(null, days.filter(e => e.superselected === true).map(e => e.date)));
             const minDay = new Date(Math.min.apply(null, days.filter(e => e.superselected === true).map(e => e.date)));
-            
-            days.filter(i => i.date < maxDay && i.date > minDay).forEach(k => k.selected = true);
-            days.find(i => i.date === minDay).firstDaySuperSelected = true;
+
+            days.filter(i => i.date <= maxDay && i.date >= minDay).forEach(k => k.selected = true);
+            days.find(i => i.date.toDateString() === minDay.toDateString()).firstDaySuperSelected = true;
         }
         else{
             days.forEach(i => {
                 i.selected = false;
                 i.superselected = false;
+                i.firstDaySuperSelected = false;
+                i.lastDaySuperSelected = false;
             });
             days.find(i => i.date === e.date).superselected = true;
         }
@@ -71,7 +73,8 @@ class Month extends React.Component{
             date={obj.date} 
             month={this.props.month}
             key={obj.date} 
-            firstDaySuperSelected={false}
+            firstDaySuperSelected={obj.firstDaySuperSelected}
+            lastDaySuperSelected={obj.lastDaySuperSelected}
             />);
         
         return (

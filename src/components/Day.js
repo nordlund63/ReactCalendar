@@ -24,9 +24,10 @@ function Day(props) {
   let backgroundContainer = "date-container";
   if(props.superselected){
     if(props.firstDaySuperSelected){
+      console.log("thing");
       backgroundContainer = "date-container super-selected-background-first";
     }
-    else{
+    else if(props.lastDaySuperSelected){
       backgroundContainer = "date-container super-selected-background-last";
     }
   }

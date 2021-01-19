@@ -12,7 +12,9 @@ class Calendar extends React.Component{
         const selectedDate = this.state.selectedDate;
         return (
             <div>
+                <Month month={10} year={2020} />
                 <Month month={11} year={2020} />
+                <Month month={12} year={2020} />
                 <div>
                     {selectedDate !== null ? selectedDate.toLocaleDateString('en-US') : ''}
                 </div>
